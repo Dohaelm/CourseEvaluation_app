@@ -1,6 +1,8 @@
 package net.DohaElm.ExamConteneurisation_backend.entity;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,7 +30,7 @@ public class Module {
 	    @Column(name="module_name")
 	    private String name;
 
-	    // One module can have multiple courses
+	    @JsonIgnore
 	    @OneToMany(mappedBy = "module", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	    private List<Course> courses;
 

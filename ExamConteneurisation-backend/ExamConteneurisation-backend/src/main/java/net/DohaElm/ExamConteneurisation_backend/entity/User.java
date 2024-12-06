@@ -1,4 +1,11 @@
 package net.DohaElm.ExamConteneurisation_backend.entity;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -21,7 +28,7 @@ import net.DohaElm.ExamConteneurisation_backend.entity.utils.Role;
 @Entity
 @Table(name = "users")
 
-public class User {
+public class User implements UserDetails {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -47,6 +54,18 @@ public class User {
 	@ManyToOne
     @JoinColumn(name = "promotion_id", nullable = true) 
     private Promotion promotion;
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return List.of(new SimpleGrantedAuthority(role.name()));
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return email;
+	}
 	
 	
 	
