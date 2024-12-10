@@ -2,6 +2,7 @@ package net.DohaElm.ExamConteneurisation_backend.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,8 +24,14 @@ public class SecurityConfiguration {
 		.csrf()
 		.disable()
 		.authorizeHttpRequests()
-		.requestMatchers("/api/auth/authenticate","/api/users","/api/users/**")
+		.requestMatchers("/api/auth/authenticate")
 		.permitAll()
+		.requestMatchers("/api/users","/api/users/**").hasAuthority("ADMIN")
+		.requestMatchers(HttpMethod.POST ,"/api/courses").hasAuthority("ADMIN")
+		.requestMatchers(HttpMethod.PUT,"/api/courses/**").hasAuthority("ADMIN")
+		.requestMatchers(HttpMethod.DELETE,"/api/courses/**").hasAuthority("ADMIN")
+		.requestMatchers(HttpMethod.POST,"/{courseId}/evaluations").hasAuthority("STUDENT")
+		
 		.anyRequest()
 		.authenticated()
 		.and()
