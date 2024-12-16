@@ -1,57 +1,34 @@
-import React, { useEffect,useState } from "react";
-import authService from "../services/authService";
-import coursesService from "../services/coursesService";
+import React from 'react';
+import {jwtDecode} from 'jwt-decode';
+
+import DashboardStudent from './DashboardStudent';
+ import DashboardTeacher from './DashboardTeacher';
+ import DashboardAdmin from './DashboardAdmin';
 
 const Dashboard = () => {
-    
-    const [courses, setCourses] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
-  
-    useEffect(() => {
-    
-      const fetchCourses = async () => {
-        try {
-          const response = await coursesService.getCourses();
-          setCourses(response.data); 
-          setLoading(false);
-          console.log("API Response:", response.data);
-        } catch (err) {
-          console.error("Failed to fetch courses:", err);
-          setError("Failed to load courses. Please try again later.");
-          setLoading(false);
-        }
-      };
-  
-      fetchCourses();
-    }, []);
-  
-    if (loading) return <div> <h1>Dashboard</h1>
-    
-<p>Loading...</p> </div>; 
-    if (error) return <div> <h1>Dashboard</h1>
-    
-<p>{error}</p> </div>; 
-  
-    return (
-      <div>
-        <h1>Dashboard</h1>
-        
-  
-        <h2>Courses</h2>
-        {Array.isArray(courses) && courses.length === 0 ? (
-          <p>No courses available.</p>
-        ) : (
-          <ul>
-            {courses.map((course) => (
-              <li key={course.id}>
-                <h3>{course.title}</h3>
-                <p>{course.description}</p>
-                <p>Professeur {course.instructor.lastName} {course.instructor.firstName}</p>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div> )}
+  const token = localStorage.getItem('jwtToken');
 
-export default Dashboard; 
+  if (!token) {
+    return <p>Unauthorized: Please log in.</p>; // Handle cases where the user is not logged in
+  }
+
+  const decodedToken = jwtDecode(token);
+  const role = decodedToken.role;
+
+  if (!role) {
+    return <p>Invalid token: No role found.</p>;
+  }
+
+  switch (role) {
+    case 'STUDENT':
+      return <DashboardStudent />;
+      case 'TEACHER':
+      return <DashboardTeacher />;
+     case 'ADMIN':
+       return <DashboardAdmin />;
+    default:
+      return <p>Unauthorized: Role not recognized.</p>;
+  }
+};
+
+export default Dashboard;

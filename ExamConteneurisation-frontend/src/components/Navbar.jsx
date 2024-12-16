@@ -11,9 +11,9 @@ const Navbar = () => {
   const token = localStorage.getItem("jwtToken");
   
   const userRole = token ? jwtDecode(token).role : null;
-// useEffect(()=>{
-// console.log(decodedToken)
-// })
+useEffect(()=>{
+ console.log(jwtDecode(token))
+ })
   const handleLogout = () => {
     authService.logout();
     navigate("/"); // Redirect to login page after logout
@@ -31,6 +31,16 @@ const Navbar = () => {
         {userRole == "ADMIN" && (
           <li style={styles.navItem} onClick={() => navigate("/utilisateurs")}>
             Utilisateurs
+          </li>
+        )}
+        {userRole == "ADMIN" && (
+          <li style={styles.navItem} onClick={() => navigate("/modules")}>
+            Modules
+          </li>
+        )}
+        {userRole == "ADMIN" && (
+          <li style={styles.navItem} onClick={() => navigate("/promotions")}>
+            Promotions
           </li>
         )}
         <li style={styles.navItem} onClick={handleLogout}>
