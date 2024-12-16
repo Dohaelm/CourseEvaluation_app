@@ -7,6 +7,6 @@ import net.DohaElm.ExamConteneurisation_backend.entity.Evaluation;
 
 public interface EvaluationService {
 	 Evaluation createEvaluation(EvaluationDto evaluationDto);
-	 List<Evaluation> getEvaluationsByCourse(Long courseId);
-	 List<Evaluation> getEvaluationsByUser(Long userId);
+	 List<EvaluationDto> getEvaluationsByCourse(Long courseId);
+	 List<EvaluationDto> getEvaluationsByUser(Long userId);
 }

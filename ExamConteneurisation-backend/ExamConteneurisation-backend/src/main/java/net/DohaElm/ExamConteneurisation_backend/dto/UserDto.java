@@ -30,7 +30,7 @@ public class UserDto {
 	private Role role; 
 	
 	
-    private Promotion promotion;
+    private Long promotionId;
 	
 	
 	

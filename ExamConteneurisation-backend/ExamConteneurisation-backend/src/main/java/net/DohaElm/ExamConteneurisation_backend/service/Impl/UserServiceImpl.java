@@ -18,23 +18,24 @@ import net.DohaElm.ExamConteneurisation_backend.service.UserService;
 public class UserServiceImpl implements UserService{
    
 	private UserRepository userRepository;
+	private final UserMapper userMapper;
 	@Override
 	public UserDto createUser(UserDto userDto) {
 		
-		User user = UserMapper.mapToUser(userDto);
+		User user = userMapper.mapToUser(userDto);
 		User savedUser= userRepository.save(user);
-		return UserMapper.mapToUserDto(savedUser);
+		return userMapper.mapToUserDto(savedUser);
 	}
 	@Override
 	public UserDto getUserById(Long userId) {
 		User user=userRepository.findById(userId)
 		              .orElseThrow(() -> new ResourceNotFoundException("User with given id not found"));
-		              return UserMapper.mapToUserDto(user);
+		              return userMapper.mapToUserDto(user);
 	}
 	@Override
 	public List<UserDto> getAllUsers() {
 		List<User> users = userRepository.findAll();
-		return users.stream().map((user)->UserMapper.mapToUserDto(user))
+		return users.stream().map((user)->userMapper.mapToUserDto(user))
 				.collect(Collectors.toList());
 				
 	}
@@ -51,13 +52,13 @@ public class UserServiceImpl implements UserService{
 		user.setEmail(updatedUser.getEmail());}
 		if(updatedUser.getRole()!=null) {
 		user.setRole(updatedUser.getRole());}
-		if(updatedUser.getPromotion()!=null) {
-			user.setPromotion(updatedUser.getPromotion());
+		//if(updatedUser.getPromotionId()!=null) {
+		//	user.setPromotion(updatedUser.getPromotion());
 			
-		}
+		//}
 		
 		User updatedUserObj=userRepository.save(user);
-		return UserMapper.mapToUserDto(updatedUserObj);
+		return userMapper.mapToUserDto(updatedUserObj);
 	}
 	@Override
 	public void deleteUser(Long userId) {
@@ -65,6 +66,15 @@ public class UserServiceImpl implements UserService{
 		User user=userRepository.findById(userId).orElseThrow(
 				() -> new ResourceNotFoundException("User with given id doesn't exist"));
 		userRepository.deleteById(userId);
+	}
+	@Override
+	public UserDto getUserByEmail(String email) {
+		User user = userRepository.findByEmail(email)
+	            .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
+
+	    // Convert the user entity to a UserDto (you can use ModelMapper or manually map it)
+	    UserDto userDto =   userMapper.mapToUserDto(user);
+	    return userDto;
 	} 
 	
 }

@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
+import net.DohaElm.ExamConteneurisation_backend.dto.EvaluationDto;
 import net.DohaElm.ExamConteneurisation_backend.dto.UserDto;
-import net.DohaElm.ExamConteneurisation_backend.entity.Evaluation;
 import net.DohaElm.ExamConteneurisation_backend.service.EvaluationService;
 import net.DohaElm.ExamConteneurisation_backend.service.UserService;
 
@@ -40,7 +40,13 @@ public class UserController {
     	UserDto userDto=userService.getUserById(userId);
     	return ResponseEntity.ok(userDto);
     }
-	
+	@GetMapping("email/{email}")
+	public ResponseEntity<UserDto> getUserByEmail(@PathVariable("email") String email) {
+	    // Fetch the user from the repository using the email
+		UserDto userDto=userService.getUserByEmail(email);
+    	return ResponseEntity.ok(userDto);
+	}
+
 	@GetMapping
 	public ResponseEntity<List<UserDto>> getAllUsers(){
 		List<UserDto> users=userService.getAllUsers();
@@ -60,8 +66,8 @@ public class UserController {
 		return ResponseEntity.ok("User deleted successfully");
 	}
 	 @GetMapping("/{userId}/evaluations")
-	    public ResponseEntity<List<Evaluation>> getEvaluationsByUser(@PathVariable Long userId) {
-	        List<Evaluation> evaluations = evaluationService.getEvaluationsByUser(userId);
+	    public ResponseEntity<List<EvaluationDto>> getEvaluationsByUser(@PathVariable Long userId) {
+	        List<EvaluationDto> evaluations = evaluationService.getEvaluationsByUser(userId);
 	        return ResponseEntity.ok(evaluations);
 	    }
 }

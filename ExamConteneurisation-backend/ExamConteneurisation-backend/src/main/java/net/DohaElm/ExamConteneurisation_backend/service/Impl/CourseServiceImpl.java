@@ -48,7 +48,10 @@ public class CourseServiceImpl implements CourseService {
         course.setEndDate(courseRequest.getEndDate());
         course.setInstructor(instructor);  // Set the instructor
         course.setModule(module);          // Set the module
-        course.setPromotion(promotion);    // Set the promotion
+        course.setPromotion(promotion);
+        course.setPeriode(courseRequest.getPeriode());    
+        course.setSemestre(courseRequest.getSemestre());
+        
         course.setStatus(determineCourseStatus(course.getStartDate(), course.getEndDate()));
         // Save the course to the repository
         return courseRepository.save(course);
@@ -126,11 +129,11 @@ public class CourseServiceImpl implements CourseService {
         LocalDate currentDate = LocalDate.now();
 
         if (currentDate.isBefore(startDate)) {
-            return CourseStatus.PENDING;
+            return CourseStatus.PENDING;  // Course hasn't started yet
         } else if (currentDate.isAfter(endDate)) {
-            return CourseStatus.COMPLETED;
+            return CourseStatus.COMPLETED;  // Course has ended
         } else {
-            return CourseStatus.ONGOING;
+            return CourseStatus.ONGOING;  // Course is still ongoing (today is between start and end date)
         }
     }
 

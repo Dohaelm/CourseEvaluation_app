@@ -61,8 +61,8 @@ public class CourseController {
 	        return new ResponseEntity<>(createdEvaluation, HttpStatus.CREATED);
 	    }
 	 @GetMapping("/{courseId}/evaluations")
-	 public ResponseEntity<List<Evaluation>> getEvaluationsByCourse(@PathVariable Long courseId) {
-	        List<Evaluation> evaluations = evaluationService.getEvaluationsByCourse(courseId);
+	 public ResponseEntity<List<EvaluationDto>> getEvaluationsByCourse(@PathVariable Long courseId) {
+	        List<EvaluationDto> evaluations = evaluationService.getEvaluationsByCourse(courseId);
 	        return ResponseEntity.ok(evaluations);
 	    }
 	 

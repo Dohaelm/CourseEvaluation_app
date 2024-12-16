@@ -39,7 +39,11 @@ public class Course {
 	  
 	  @Column(name="endDate")
 	    private LocalDate endDate;
-
+       
+	  @Column(name="periode")
+	    private int periode;
+	  @Column (name="semestre")
+	     private int semestre;
 	    
 	    @ManyToOne
 	    @JoinColumn(name = "module_id")  
@@ -61,5 +65,7 @@ public class Course {
         @ManyToOne
         @JoinColumn(name = "promotion_id", nullable = false) 
         private Promotion promotion;
+        
+        
 
 }
