@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import coursesService from "../services/coursesService";
 import userService from "../services/userService";
 import { useNavigate } from "react-router-dom";
+import './Courses.css';
+import { Link } from "react-router-dom";
 
 const CoursesStudent = () => {
   const navigate = useNavigate()
@@ -81,33 +83,41 @@ const CoursesStudent = () => {
   if (error) return <div><p>{error}</p></div>;
 
   return (
-    <div>
-      <h2>Bienvenue Étudiant</h2>
+    <div className="courses-admin mt-5">
+      <h2>Bienvenue Etudiant</h2>
       <p>Voici l'ensemble des cours</p>
-      <input
-        type="text"
-        placeholder="Search by title, instructor, module, status..."
-        value={searchQuery}
-        onChange={handleSearchChange}
-        onKeyDown={handleSearchKeyDown}
-      />
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Chercher par titre, module , statut ou professeur"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          onKeyDown={handleSearchKeyDown}
+        />
+      </div>
       {filteredCourses.length === 0 ? (
         <p>Aucun cours disponible.</p>
       ) : (
         
-        <ul>
+        <ul className="courses-grid">
           {filteredCourses.map((course) => (
-            <li key={course.id}>
-             <button  onClick={()=> navigate(`/cours/${course.id}`) }> <h3>{course.title}</h3></button>
-              <p>Description :{course.description}</p>
-              <p>Statut : {course.status}</p>
-              <p>Module : {course.module.name}</p>
-              <p>Promotion : {course.promotion.name}</p>
-              <p>S: {course.semestre} P: {course.periode}</p>
-              <p>Professeur : {course.instructor.lastName} {course.instructor.firstName}</p>
-              { course.evaluations && course.evaluations.length!==0 && 
-              <p>Moyenne des avis : {averageStars(course.evaluations)} étoiles</p>}
-             
+            <li className="course-card" key={course.id}>
+             <Link to={`/cours/${course.id}`} >
+              <h3 className="course-link">{course.title}</h3>
+              </Link>
+              <p>Description: {course.description}</p>
+              <p>Statut: {course.status}</p>
+              <p>Module: {course.module.name}</p>
+              <p>Promotion: {course.promotion.name}</p>
+              <p>
+                S: {course.semestre} P: {course.periode}
+              </p>
+              <p>
+                Professeur: {course.instructor.lastName} {course.instructor.firstName}
+              </p>
+              {course.evaluations && course.evaluations.length !== 0 && (
+                <p>Moyenne des avis: {averageStars(course.evaluations)} étoiles</p>
+              )}
             </li>
           ))}
         </ul>

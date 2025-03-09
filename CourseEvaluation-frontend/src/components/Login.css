@@ -1,0 +1,53 @@
+/* Login.css */
+html, body {
+    height: 100%;
+    margin: 0; /* Remove default margin */
+}
+
+.login-page {
+    background-color: black;
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vmax;
+}
+
+.login-form {
+    background-color:transparent; /* Semi-transparent white background */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255,255,255, .2);
+  
+    backdrop-filter: blur(50px);  /* Blurring effect behind the box */
+    padding: 60px;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    width: 100%;
+    max-width: 700px; /* Limit the width of the box */
+}
+
+
+.login-form input
+ {
+    margin-bottom: 50px;
+}
+.login-form button{
+    margin-top: 20px;
+   
+   
+} 
+.fp {
+    transition: color 0.5s ease, text-shadow 0.5s ease; /* Smooth transition for color and shadow */
+  }
+  
+  .fp:hover {
+    color: #add8e6; /* Baby blue text color */
+    text-shadow: 1px 1px 2px rgba(173, 216, 230, 0.7); /* Tiny, subtle shadow */
+  }
+  .btn-primary {
+    transition: background-color 0.5s ease; /* Smooth transition for background color */
+  }
+  
+  .btn-primary:hover {
+    background-color: #7ec8d8; /* Less bright baby blue */
+  }

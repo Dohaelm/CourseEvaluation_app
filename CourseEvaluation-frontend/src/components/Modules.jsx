@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import coursesService from "../services/coursesService";
-
+import userService from "../services/userService";
+import { useNavigate } from "react-router-dom";
+import "./Module.css";
+import { Trash2 } from "lucide-react";
 const Modules = () => {
   const [modules, setModules] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
   const [newModuleName, setNewModuleName] = useState("");
-
+  const navigate=useNavigate();
   // Fetch modules from the database
   const fetchModules = async () => {
     try {
@@ -53,32 +56,60 @@ const Modules = () => {
 
   // Fetch modules on component mount
   useEffect(() => {
-    fetchModules();
+    const Admin =  userService.isAdmin();
+        
+    if (!Admin) {
+      navigate('/');
+    }
+    else{
+      fetchModules();
+
+    }
   }, []);
 
   return (
-    <div>
-      <h2>Modules</h2>
-      <button onClick={() => setIsAdding(!isAdding)}>+ Add Module</button>
+  <div className="page">
+    <div className="modules-container">
+      <h2 className="modules-title">Modules</h2>
+      <button
+        onClick={() => setIsAdding(!isAdding)}
+        className="add-module-btn"
+      >
+        + Add Module
+      </button>
+
       {isAdding && (
-        <div>
+        <div className="add-module-form">
           <input
             type="text"
             placeholder="Enter module name"
             value={newModuleName}
             onChange={(e) => setNewModuleName(e.target.value)}
+            className="module-input"
           />
-          <button onClick={handleCreate}>Create</button>
+          <button
+            onClick={handleCreate}
+            className="create-module-btn"
+          >
+            Create
+          </button>
         </div>
       )}
-      <ul>
+
+      <ul className="module-list">
         {modules.map((module) => (
-          <li key={module.id}>
-            {module.name}{" "}
-            <button onClick={() => handleDelete(module.id)}>Delete</button>
+          <li key={module.id} className="module-item">
+            {module.name}
+            <button
+              onClick={() => handleDelete(module.id)}
+              className=" bg-transparent delete-btn"
+            >
+             <Trash2 className="w-6 h-6 " />
+            </button>
           </li>
         ))}
       </ul>
+    </div>
     </div>
   );
 };

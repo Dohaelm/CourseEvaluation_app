@@ -1,0 +1,103 @@
+/* Module Container */
+.modules-container {
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: 100px;
+  }
+  .page {
+    background-color:  #F3F4F6;
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vmax;
+}
+  /* Title */
+  .modules-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  
+  /* Add Module Button */
+  .add-module-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .add-module-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Add Module Form */
+  .add-module-form {
+    display: flex;
+    margin-top: 1rem;
+  }
+  
+  .module-input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 70%;
+    margin-right: 10px;
+  }
+  
+  .create-module-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .create-module-btn:hover {
+    background-color: #218838;
+  }
+  
+  /* Module List */
+  .module-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+  }
+  
+  .module-item {
+    background-color: #ffffff;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Delete Button */
+  .delete-btn {
+    background-color: transparent;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .delete-btn:hover {
+    color: #c82333;
+  }
+  

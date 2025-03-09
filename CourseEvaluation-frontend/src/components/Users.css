@@ -1,0 +1,110 @@
+/* General Styles */
+.users-container {
+    margin-top: 50px;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Title */
+  .users-container h2 {
+    color: #2c3e50;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  /* Search Input */
+  .search-input {
+    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    outline: none;
+  }
+  
+  .search-input:focus {
+    border-color: #007bff;
+  }
+  
+  /* User List */
+  .user-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .user-list li {
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* User Info */
+  .user-info h3 {
+    font-size: 1.2rem;
+    color: #34495e;
+  }
+  
+  .delete-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #e74c3c;
+    font-size: 1.2rem;
+    margin-left: 10px;
+  }
+  
+  .delete-button:hover {
+    color: #c0392b;
+  }
+  
+  /* Trash Icon */
+  .delete-button svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* No users message */
+  .no-users-message {
+    font-size: 1rem;
+    color: #7f8c8d;
+  }
+  
+  /* Promotion, Role, and Courses */
+  .user-info p {
+    font-size: 1rem;
+    color: #34495e;
+  }
+  
+  /* Style for roles */
+  .user-role {
+    font-weight: bold;
+  }
+  
+  /* Styling for courses list */
+  .courses-list {
+    padding-left: 20px;
+  }
+  
+  .courses-list li {
+    margin-bottom: 5px;
+    font-size: 1rem;
+  }
+  .add-user-button {
+    background-color: #007bff; /* Optional: Add a color */
+    color: white; /* Optional: Text color */
+    border: none;
+    padding: 5px 10px; /* Smaller button size */
+    font-size: 16px; /* Adjust font size */
+    border-radius: 5px;
+    cursor: pointer;
+   
+    margin-left: 150px; /* Shift button to the right */
+  }
+  .add-user-button:hover {
+    background-color: #0056b3; /* Optional: Add hover effect */
+  }

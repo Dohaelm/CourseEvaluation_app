@@ -1,0 +1,99 @@
+/* Center the form with proper margin */
+.create-user-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin-top: 50px;
+    background-color: #f0f0f0;
+  }
+  
+  .create-user-form {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 30px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Title styling */
+  .create-user-form h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Form input fields */
+  .create-user-form input,
+  .create-user-form select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    color: #333;
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
+  
+  /* Focus effect on input */
+  .create-user-form input:focus,
+  .create-user-form select:focus {
+    border-color: #4caf50;
+    outline: none;
+    background-color: #ffffff;
+  }
+  
+  /* Label styling */
+  .create-user-form label {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #555;
+    display: block;
+  }
+  
+  /* Success and error messages */
+  .create-user-form .success-message {
+    color: #4caf50;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  .create-user-form .error-message {
+    color: #f44336;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  /* Submit button styling */
+  .create-user-form button {
+    width: 100%;
+    padding: 14px;
+    
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  
+  
+  /* Adjust for responsive design */
+  @media (max-width: 576px) {
+    .create-user-form {
+      padding: 20px;
+    }
+  
+    .create-user-form h2 {
+      font-size: 20px;
+    }
+  }
+  

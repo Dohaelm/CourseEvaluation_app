@@ -128,7 +128,7 @@ const userService = {
   
     // Check if token exists
     if (!token) {
-      throw new Error("No JWT token found");
+      return false;
     }
   
     // Decode the token once

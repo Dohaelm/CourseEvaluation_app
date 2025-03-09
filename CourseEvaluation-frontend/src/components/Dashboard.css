@@ -1,0 +1,113 @@
+html, body {
+    height: 100%;
+    margin: 0; /* Remove default margin */
+}
+
+  
+  /* Card Styling with Shadow and Hover Effect */
+  .card {
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+   
+  }
+  
+  
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .card-title {
+    color: #1a202c; /* Dark color for course title */
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .card-text {
+    color: #4b5563; /* Slightly lighter gray for text */
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+  
+  /* Stylish Button */
+  button {
+    background-color: #2563eb; /* Tailwind Blue */
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    border: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #7ec8d8; /* Darker blue on hover */
+   
+  }
+  
+  button:active {
+    transform: translateY(0);
+  }
+  
+  /* Section and Layout Styling */
+  .container {
+    background-color: #F3F4F6; /* Light Gray Background */
+    height: 100vh; /* Full viewport height */
+    padding: 60px;
+    width: 100vw;
+    box-sizing: border-box;
+   
+    
+  }
+  
+  .card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  /* Heading Styling */
+  h2 {
+    color: #2d3748; /* Dark Text Color */
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+  
+  p {
+    font-size: 1.125rem;
+    color: #4a5568;
+  }
+  
+  /* Overlay Text for Cards */
+  .card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 15px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+
+  
+  /* Spacing and Margin Adjustments */
+  .mb-5 {
+    margin-bottom: 2rem;
+  }
+  
+  .mt-5 {
+    margin-top: 2rem;
+  }
+  

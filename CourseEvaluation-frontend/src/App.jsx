@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
+import React, { useEffect, useState } from "react";
 import ProtectedRoute from "./routes/ProtectedRoutes";
 import Dashboard from "./components/Dashboard";
 import authService from "./services/authService";
@@ -14,9 +15,36 @@ import CreateCourse from "./components/CreateCourse";
 import Users from "./components/Users";
 import Modules from "./components/Modules";
 import Promotions from "./components/Promotions";
+import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 function App() {
+  
+    const [isAdmin,setIsAdmin]=useState(false);
+    const [isAuthenticated, setIsAuthenticated]=useState(false) ;
+  useEffect(() => {
+    const fetchIsAdmin = async () => {
+      try {
+        const [responseAd,responseAu] = await Promise.all([userService.isAdmin(), authService.isAuthenticated() ])
+     
+      
+       console.log(responseAd, responseAu)
+
+        setIsAdmin(responseAd); 
+        setIsAuthenticated(responseAu);
+       
+        
+      } catch (err) {
+        console.error("Failed to fetch role :", err);
+        setError("Failed to fetch role. Please try again later.");
+        
+      }
+    };
+
+    fetchIsAdmin();
+  }, []);
   return (
     <Router>
       <Routes>
@@ -48,42 +76,42 @@ function App() {
           /> 
           <Route
             path="/ajouter-utilisateur"
-            element={authService.isAuthenticated() && userService.isAdmin()?(
+            element={
               <ProtectedRoute>
                 <CreateUser />
-              </ProtectedRoute>):( <Navigate to="/dashboard" replace />)
-            }
+              </ProtectedRoute>}
+           
           /> 
           <Route
             path="/modules"
-            element={authService.isAuthenticated() && userService.isAdmin()?(
+            element={ 
               <ProtectedRoute>
                 <Modules />
-              </ProtectedRoute>):( <Navigate to="/dashboard" replace />)
+              </ProtectedRoute>
             }
           /> 
           <Route
             path="/promotions"
-            element={authService.isAuthenticated() && userService.isAdmin()?(
+            element={
               <ProtectedRoute>
                 <Promotions />
-              </ProtectedRoute>):( <Navigate to="/dashboard" replace />)
+              </ProtectedRoute>
             }
           /> 
            <Route
             path="/ajouter-cours"
-            element={authService.isAuthenticated() && userService.isAdmin()?(
+            element={
               <ProtectedRoute>
                 <CreateCourse />
-              </ProtectedRoute>):( <Navigate to="/dashboard" replace />)
+              </ProtectedRoute>
             }
           /> 
            <Route
             path="/utilisateurs"
-            element={authService.isAuthenticated() && userService.isAdmin()?(
+            element={
               <ProtectedRoute>
                 <Users />
-              </ProtectedRoute>):( <Navigate to="/dashboard" replace />)
+              </ProtectedRoute>
             }
           /> 
           
@@ -96,11 +124,11 @@ function App() {
         <Route
         path="/"
         element={
-          authService.isAuthenticated() ? (
-            <Navigate to="/dashboard" replace />
-          ) : (
+          
+           
+         
             <Login />
-          )
+          
         }
       />
       </Routes>

@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
 import coursesService from "../services/coursesService";
+import userService from "../services/userService";
+import { Trash2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import './Module.css'
+
 
 const Promotions = () => {
   const [promotions, setPromotions] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
   const [newPromotionName, setNewPromotionName] = useState("");
+  const navigate = useNavigate();
+
 
   // Fetch promotions from the database
   const fetchPromotions = async () => {
@@ -52,33 +59,68 @@ const Promotions = () => {
   };
 
   // Fetch promotions on component mount
-  useEffect(() => {
-    fetchPromotions();
+  useEffect( () => {
+    const fetchUserAndPromotions = async () => {
+      try {
+        const Admin =  userService.isAdmin();
+        
+        if (!Admin) {
+          navigate('/');
+        } else {
+          fetchPromotions();
+        }
+      } catch (error) {
+        console.error("Error fetching current user or promotions", error);
+      }
+    };
+    fetchUserAndPromotions();
+    
+    
   }, []);
 
   return (
-    <div>
-      <h2>Promotions</h2>
-      <button onClick={() => setIsAdding(!isAdding)}>+ Add Promotion</button>
+    <div className="page">
+    <div className="modules-container"> {/* Reusing the same container class */}
+      <h2 className="modules-title">Promotions</h2>
+      <button
+        onClick={() => setIsAdding(!isAdding)}
+        className="add-module-btn"
+      >
+        + Add Promotion
+      </button>
+
       {isAdding && (
-        <div>
+        <div className="add-module-form">
           <input
             type="text"
             placeholder="Enter promotion name"
             value={newPromotionName}
             onChange={(e) => setNewPromotionName(e.target.value)}
+            className="module-input"
           />
-          <button onClick={handleCreate}>Create</button>
+          <button
+            onClick={handleCreate}
+            className="create-module-btn"
+          >
+            Create
+          </button>
         </div>
       )}
-      <ul>
+
+      <ul className="module-list">
         {promotions.map((promotion) => (
-          <li key={promotion.id}>
-            {promotion.name}{" "}
-            <button onClick={() => handleDelete(promotion.id)}>Delete</button>
+          <li key={promotion.id} className="module-item"> {/* Reusing the module-item class */}
+            {promotion.name}
+            <button
+              onClick={() => handleDelete(promotion.id)}
+             className=" bg-transparent delete-btn"
+            >
+             <Trash2 className="w-6 h-6 " />
+            </button>
           </li>
         ))}
       </ul>
+    </div>
     </div>
   );
 };

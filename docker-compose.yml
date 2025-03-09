@@ -1,0 +1,62 @@
+services:
+  database: 
+    image: mysql:8.0
+    container_name: mysql-service
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword 
+      MYSQL_DATABASE: aseds_suivicours
+    volumes :
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - network-ce 
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    image: dohaelm123/backend-ce:v1
+    container_name: backend-service
+    ports :
+      - "8080:8080"
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://database:3306/aseds_suivicours?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=rootpassword
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT=org.hibernate.dialect.MySQL8Dialect
+      - SPRING_DATASOURCE_HIKARI_CONNECTION_TIMEOUT=60000
+      - SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE=5
+      - SPRING_DATASOURCE_HIKARI_MINIMUM_IDLE=2
+      - SPRING_DATASOURCE_INITIALIZATION_MODE=always
+  
+    networks: 
+      - network-ce
+  
+  frontend:
+    image: dohaelm123/frontend-ce:v1
+    container_name: frontend-service
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    
+    networks:
+      - network-ce
+volumes:
+  mysql-data:
+    driver: local
+networks:
+  network-ce:
+    driver: bridge
+
+
+
+

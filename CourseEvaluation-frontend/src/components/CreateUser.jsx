@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import userService from "../services/userService";
 import coursesService from "../services/coursesService"; // Service to fetch promotions
-
+import "./CreateUser.css"
 const CreateUser = () => {
   const [formData, setFormData] = useState({
     firstName: "",
@@ -32,8 +32,16 @@ const CreateUser = () => {
         setError("Failed to load promotions. Please try again.");
       }
     };
+    const Admin =  userService.isAdmin();
+        
+    if (!Admin) {
+      navigate('/');
+    } 
+    else{
 
-    fetchPromotions();
+      fetchPromotions();
+    }
+
   }, []);
 
   const handleChange = (e) => {
@@ -64,97 +72,100 @@ const CreateUser = () => {
   };
 
   return (
-    <div>
-      <h2>Ajouter Utilisateur</h2>
-      {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        {/* First Name */}
-        <div>
-          <label>First Name:</label>
-          <input
-            type="text"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            required
-          />
-        </div>
+    <div className="create-user-container">
+  <div className="create-user-form">
+    <h2>Ajouter Utilisateur</h2>
+    {successMessage && <p className="success-message">{successMessage}</p>}
+    {error && <p className="error-message">{error}</p>}
+    <form onSubmit={handleSubmit}>
+      {/* First Name */}
+      <div>
+        <label>Prénom :</label>
+        <input
+          type="text"
+          name="firstName"
+          value={formData.firstName}
+          onChange={handleChange}
+          required
+        />
+      </div>
 
-        {/* Last Name */}
-        <div>
-          <label>Last Name:</label>
-          <input
-            type="text"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-          />
-        </div>
+      {/* Last Name */}
+      <div>
+        <label>Nom :</label>
+        <input
+          type="text"
+          name="lastName"
+          value={formData.lastName}
+          onChange={handleChange}
+          required
+        />
+      </div>
 
-        {/* Email */}
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
+      {/* Email */}
+      <div>
+        <label>Email :</label>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+      </div>
 
-        {/* Password */}
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
+      {/* Password */}
+      <div>
+        <label>Mot de passe :</label>
+        <input
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+      </div>
 
-        {/* Role */}
-        <div>
-          <label>Role:</label>
-          <select
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
-            required
-          >
-            <option value="STUDENT">Student</option>
-            <option value="TEACHER">Teacher</option>
-            <option value="ADMIN">Admin</option>
-          </select>
-        </div>
+      {/* Role */}
+      <div>
+        <label>Role :</label>
+        <select
+          name="role"
+          value={formData.role}
+          onChange={handleChange}
+          required
+        >
+          <option value="STUDENT">Elève</option>
+          <option value="TEACHER">Professeur</option>
+          <option value="ADMIN">Admin</option>
+        </select>
+      </div>
 
-        {/* Promotion Dropdown */}
-        <div>
-          <label>Promotion:</label>
-          <select
-            name="promotionId"
-            value={formData.promotionId}
-            onChange={handleChange}
-            required={formData.role === "STUDENT"} // Promotion is only required for students
-          >
-            <option value="" disabled>
-              Select a promotion
-            </option>
-            {Array.isArray(promotions) && promotions.map((promotion) => (
+      {/* Promotion Dropdown */}
+      <div>
+        <label>Promotion :</label>
+        <select
+          name="promotionId"
+          value={formData.promotionId}
+          onChange={handleChange}
+          required={formData.role === "STUDENT"}
+        >
+          <option value="" disabled>
+            Selectionner une promotion
+          </option>
+          {Array.isArray(promotions) &&
+            promotions.map((promotion) => (
               <option key={promotion.id} value={promotion.id}>
-                {promotion.name} {/* Display promotion name */}
+                {promotion.name}
               </option>
             ))}
-          </select>
-        </div>
+        </select>
+      </div>
 
-        <button type="submit">Create User</button>
-      </form>
-    </div>
+      <button type="submit">Ajouter utilisateur</button>
+    </form>
+  </div>
+</div>
   );
 };
 

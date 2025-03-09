@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { FaStar } from "react-icons/fa"; // Import star icon
 import coursesService from "../services/coursesService";
 import userService from "../services/userService";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
+import { Trash2 } from "lucide-react";
+import "./Course.css"; // Import CSS file
 
 const Course = () => {
   const { id } = useParams();
@@ -11,6 +14,7 @@ const Course = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [stars, setStars] = useState(0);
+  const [hover, setHover] = useState(0);
   const [comment, setComment] = useState("");
   const [evaluationError, setEvaluationError] = useState("");
   const [evaluationDone, setEvaluationDone] = useState(true);
@@ -72,7 +76,7 @@ const Course = () => {
       try {
         await coursesService.deleteCourse(id);
         alert("Course deleted successfully.");
-        navigate("/courses"); // Redirect to the courses list page
+        navigate("/courses");
       } catch (error) {
         console.error("Failed to delete course:", error);
         alert("Error deleting course. Please try again.");
@@ -80,24 +84,34 @@ const Course = () => {
     }
   };
 
-  if (loading) return <div><p>Loading...</p></div>;
-  if (error) return <div><p>{error}</p></div>;
+  if (loading) return <div className="loading">Loading...</div>;
+  if (error) return <div className="error">{error}</div>;
 
   return (
-    <div>
-      <h2>{course.title}</h2>
-      <p>{course.description}</p>
-      <p>{course.module.name}</p>
-      <p>S: {course.semestre} P: {course.periode}</p>
-      <p>Professeur: {course.instructor.firstName} {course.instructor.lastName}</p>
+    <div className='page'>
+    
+    <div className="course-container ">
+      
+      <h2 className="course-title">{course.title}</h2>
+      <p className="course-description">{course.description}</p>
+      <p className="course-info">
+        {course.module.name} | S: {course.semestre} | P: {course.periode}
+      </p>
+      <p className="course-instructor">
+        Professeur: {course.instructor.firstName} {course.instructor.lastName}
+      </p>
 
-      {course.evaluations && course.evaluations.length > 0 && (
+      {course.evaluations?.length > 0 && (
         <>
-          <p>Moyenne des avis : {averageStars(course.evaluations)} étoiles</p>
-          <ul>
+          <p className="course-rating">
+            Moyenne des avis : {averageStars(course.evaluations)} étoiles
+          </p>
+          <ul className="evaluations-list">
             {course.evaluations.map((ev) => (
               <li key={ev.id}>
-                <p>{ev.stars} étoiles {ev.comment && <span>: {ev.comment}</span>}</p>
+                <p>
+                  {"★".repeat(ev.stars)} {ev.comment && <span>: {ev.comment}</span>}
+                </p>
               </li>
             ))}
           </ul>
@@ -105,40 +119,41 @@ const Course = () => {
       )}
 
       {!evaluationDone && course.status === "COMPLETED" && (
-        <div>
+        <div className="evaluation-container">
           <h3>Évaluer ce cours</h3>
-          {evaluationError && <p style={{ color: "red" }}>{evaluationError}</p>}
-          <label>
-            Nombre d'étoiles (1-5): 
-            <input
-              type="number"
-              value={stars}
-              onChange={(e) => setStars(Number(e.target.value))}
-              min="1"
-              max="5"
-            />
-          </label>
-          <br />
-          <label>
-            Commentaire:
-            <textarea
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-            />
-          </label>
-          <br />
-          <button onClick={handleEvaluation}>Soumettre l'évaluation</button>
-        </div>
-      )}
-
-      {isAdmin && (
-        <div>
-          
-          <button onClick={handleDeleteCourse} style={{ marginLeft: "10px", color: "red" }}>
-            Supprimer ce cours
+          {evaluationError && <p className="error-message">{evaluationError}</p>}
+          <div className="stars-container">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <FaStar
+                key={star}
+                className="star"
+                color={star <= (hover || stars) ? "#FFD700" : "#ccc"}
+                onMouseEnter={() => setHover(star)}
+                onMouseLeave={() => setHover(0)}
+                onClick={() => setStars(star)}
+              />
+            ))}
+          </div>
+          <textarea
+            className="comment-box"
+            placeholder="Laissez un commentaire..."
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          />
+          <button className="submit-btn" onClick={handleEvaluation}>
+            Soumettre l'évaluation
           </button>
         </div>
       )}
+{isAdmin && (
+  <button 
+  onClick={handleDeleteCourse} 
+  className=" bg-transparent "
+>
+  <Trash2 className="w-6 h-6 " />
+</button>
+)}
+    </div>
     </div>
   );
 };

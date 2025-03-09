@@ -1,0 +1,109 @@
+.course-container {
+    background-color: #2e2e2e;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: auto;
+    padding-top: 100px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .course-title {
+    color: #89c2d9;
+    text-align: center;
+  }
+  
+  .course-description {
+    font-size: 16px;
+    color: #e0e0e0;
+    text-align: center;
+  }
+  
+  .course-info, .course-instructor {
+    font-size: 14px;
+    color: #cccccc;
+    text-align: center;
+  }
+  
+  .course-rating {
+    font-size: 18px;
+    color: #f4c542;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .evaluations-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .star {
+    font-size: 30px;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  
+  .stars-container {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+  }
+  
+  .comment-box {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background: #555;
+    color: white;
+    margin-top: 10px;
+  }
+  
+  .submit-btn, .delete-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .submit-btn {
+    background-color: #2196f3;
+    color: white;
+  }
+  
+  .delete-btn {
+    background-color: red;
+    color: white;
+  }
+  .deleteCourse {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background:transparent; /* Translucent background */
+    border: none;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+  }
+  
+  .deleteCourse:hover {
+    background: rgba(255, 0, 0, 0.3); /* Red translucent background on hover */
+  }
+  
+  .trash-icon {
+    width: 24px;
+    height: 24px;
+    color: white;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .deleteCourse:hover .trash-icon {
+    color: red;
+  }
+  

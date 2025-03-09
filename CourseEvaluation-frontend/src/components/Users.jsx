@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import userService from "../services/userService";
 import coursesService from "../services/coursesService"; // Import the service to fetch promotions
 import { useNavigate } from "react-router-dom";
+import { Trash2, Plus } from "lucide-react"; // Import Plus icon
+import "./Users.css";
 
 const Users = () => {
   const navigate = useNavigate();
@@ -56,8 +58,13 @@ const Users = () => {
         setLoading(false);
       }
     };
+    const Admin = userService.isAdmin();
 
-    fetchUsers();
+    if (!Admin) {
+      navigate('/');
+    } else {
+      fetchUsers();
+    }
   }, []);
 
   const handleSearchKeyDown = (e) => {
@@ -100,51 +107,61 @@ const Users = () => {
 
   if (loading) return <div><p>Loading...</p></div>;
   if (error) return <div><p>{error}</p></div>;
-
   return (
-    <div>
+    <div className="users-container">
       <h2>Bienvenue Admin</h2>
       <p>Voici l'ensemble des utilisateurs</p>
-      <input
-        type="text"
-        placeholder="Search by name, promotion, role"
-        value={searchQuery}
-        onChange={handleSearchChange}
-        onKeyDown={handleSearchKeyDown}
-      />
+      <div className="search-and-add">
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search by name, promotion, role"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          onKeyDown={handleSearchKeyDown}
+        />
+        <button
+          className="add-user-button"
+          onClick={() => navigate("/ajouter-utilisateur")}
+        >
+          <Plus className="w-6 h-6" /> {/* Display plus icon */}
+        </button>
+      </div>
       {filteredUsers.length === 0 ? (
-        <p>Aucun utilisateur disponible.</p>
+        <p className="no-users-message">Aucun utilisateur disponible.</p>
       ) : (
-        <ul>
+        <ul className="user-list">
           {filteredUsers.map((user) => (
             <li key={user.id}>
-              <h3>
-                {user.firstName} {user.lastName}
-                <button
-                  onClick={() => handleDelete(user.id)}
-                  style={{ marginLeft: "10px", color: "red" }}
-                >
-                  Delete
-                </button>
-              </h3>
-              <p>Role: {user.role}</p>
-              {user.role === "STUDENT" && (
-                <p>Promotion: {promotions[user.promotionId] || "Unknown"}</p> // Display the promotion name
-              )}
-              {user.role === "TEACHER" && (
-                <div>
-                  <p>Cours:</p>
-                  {instructorCourses[user.id]?.length > 0 ? (
-                    <ul>
-                      {instructorCourses[user.id].map((courseTitle, index) => (
-                        <li key={index}>{courseTitle}</li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <p>Aucun cours attribué.</p>
-                  )}
-                </div>
-              )}
+              <div className="user-info">
+                <h3>
+                  {user.firstName} {user.lastName}
+                  <button
+                    className="delete-button"
+                    onClick={() => handleDelete(user.id)}
+                  >
+                    <Trash2 className="w-6 h-6" /> {/* Display trash icon */}
+                  </button>
+                </h3>
+                <p className="user-role">Role: {user.role}</p>
+                {user.role === "STUDENT" && (
+                  <p>Promotion: {promotions[user.promotionId] || "Unknown"}</p> // Display the promotion name
+                )}
+                {user.role === "TEACHER" && (
+                  <div>
+                    <p>Cours:</p>
+                    {instructorCourses[user.id]?.length > 0 ? (
+                      <ul className="courses-list">
+                        {instructorCourses[user.id].map((courseTitle, index) => (
+                          <li key={index}>{courseTitle}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p>Aucun cours attribué.</p>
+                    )}
+                  </div>
+                )}
+              </div>
             </li>
           ))}
         </ul>
