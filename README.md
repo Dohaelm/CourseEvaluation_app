@@ -2,9 +2,9 @@
 # Course Evaluation App for ASEDS
 
 ## 📌 Overview
-The **Course Evaluation App** is a web platform designed for the **ASEDS program** at our school. Its main purpose is to allow students to provide **anonymous feedback** on completed courses, helping teachers improve their teaching methods and providing valuable insights for future students. The application supports **three roles**:
+The **Course Evaluation App** is a web platform designed for the **ASEDS program** at our school. Its main purpose is to allow students to provide **anonymous feedback** on completed courses, helping teachers improve their teaching methods. The application supports **three roles**:
 
-- **🧑‍🎓 Students:** Can anonymously evaluate completed courses and view upcoming courses.
+- **🧑‍🎓 Students:** Can anonymously evaluate completed courses and view upcoming courses.They can only view courses of their own promotion.
 - **👨‍🏫 Teachers:** Can see student feedback on their courses.
 - **🛠️ Admins:** Manage users, courses, and oversee platform operations.
 
